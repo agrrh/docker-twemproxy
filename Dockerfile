@@ -21,8 +21,8 @@ RUN apt-get -qy install libtool make automake git \
  && cd twemproxy \
  && git checkout v0.4.0 \
  && autoreconf -fvi \
- && ./configure --prefix=/ --enable-debug=log \
- && make \
+ && ./configure --prefix=/ \
+ && make -j2 \
  && make install \
  && cd .. \
  && rm -fr twemproxy \
