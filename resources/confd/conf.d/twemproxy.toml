@@ -6,4 +6,4 @@ keys = [
   "/services/redis",
 ]
 reload_cmd = "/usr/bin/supervisorctl twemproxy restart"
-check_cmd = "/twemproxy -t -c {{ .src }}"
+check_cmd = "nutcracker -t -c {{ .src }}"

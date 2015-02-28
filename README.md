@@ -3,6 +3,8 @@ docker-twemproxy
 
 Docker image of [twemproxy](https://github.com/twitter/twemproxy) proxy server in front of [redis](http://redis.io/) instances. 
 
+Based on [jgoodall/docker-twemproxy](https://github.com/jgoodall/docker-twemproxy)
+
 ## Overview
 
 The container reads the redis server information from [etcd](https://github.com/coreos/etcd). The twemproxy container will use [confd](https://github.com/kelseyhightower/confd) to watch the `/services/redis` path. It exposes port 6000, so map that when you do `docker run`.

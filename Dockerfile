@@ -8,30 +8,35 @@
 
 FROM jgoodall/ubuntu-confd
 
-MAINTAINER "John Goodall <jgoodall@ornl.gov>"
+MAINTAINER "Fairiz Azizi <coderfi@gmail.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# Install basics
 RUN apt-get update
-RUN apt-get -qy install libtool make automake
 
-# Install twemproxy
-RUN curl -qL https://twemproxy.googlecode.com/files/nutcracker-0.3.0.tar.gz | tar xzf -
-RUN cd nutcracker-0.3.0 && ./configure --enable-debug=log && make && mv src/nutcracker /twemproxy
-RUN cd / && rm -rf nutcracker-0.3.0
+# Install Build then Uninstall in one step to minify the docker image 
+RUN apt-get -qy install libtool make automake git \
+ && cd /tmp \
+ && git clone https://github.com/twitter/twemproxy.git \
+ && cd twemproxy \
+ && git checkout v0.4.0 \
+ && autoreconf -fvi \
+ && ./configure --prefix=/ --enable-debug=log \
+ && make \
+ && make install \
+ && cd .. \
+ && rm -fr twemproxy \
+ && apt-get remove -y libtool make automake git
 
-# Set up run script
-ADD run.sh /run.sh
-RUN chmod 755 /run.sh
-
-# Copy confd files
-ADD confd/conf.d/twemproxy.toml /etc/confd/conf.d/twemproxy.toml
-ADD confd/templates/twemproxy.tmpl /etc/confd/templates/twemproxy.tmpl
-
-# Copy supervisord files
-ADD supervisord.conf /etc/supervisor/supervisord.conf
-
-EXPOSE 6000 6222
-
+EXPOSE 6000 622
 CMD ["/run.sh"]
+
+# Copy and install resources
+ADD resources /tmp/resources
+RUN mv /tmp/resources/run.sh / \
+ && chmod 755 /run.sh \
+ && mv /tmp/resources/confd/conf.d/twemproxy.toml /etc/confd/conf.d/twemproxy.toml \
+ && mv /tmp/resources/confd/templates/twemproxy.tmpl /etc/confd/templates/twemproxy.tmpl \
+ && mv /tmp/resources/supervisord.conf /etc/supervisor/supervisord.conf \
+ && rm -fr /tmp/resources
+
