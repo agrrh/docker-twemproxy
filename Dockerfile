@@ -18,6 +18,8 @@ RUN apt-get update \
  && apt-get remove -y libtool make automake git \
  && rm -rf /var/lib/apt/lists/*
 
+ENV REDIS_AUTH=""
+
 # Copy and install resources
 COPY twemproxy.yml.in run.sh /
 

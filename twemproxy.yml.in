@@ -8,4 +8,3 @@ situ:
   server_failure_limit: 3
   timeout: 1000
   redis: true
-  servers:
