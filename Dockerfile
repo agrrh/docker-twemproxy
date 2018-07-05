@@ -17,7 +17,6 @@ RUN apk --update add --virtual build-dependencies build-base git autoconf automa
 
 ENV REDIS_AUTH=""
 
-# Copy and install resources
-COPY twemproxy.yml.in run.sh /
+COPY twemproxy.yml /
 
-CMD [ "/run.sh" ]
+CMD nutcracker -c /twemproxy.yml -v 7 -s 6222

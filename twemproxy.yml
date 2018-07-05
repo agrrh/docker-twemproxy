@@ -1,10 +1,15 @@
 situ:
   listen: 0.0.0.0:6379
   hash: fnv1a_64
-  hash_tag: "P:"
+  hash_tag: "{}"
   distribution: ketama
   auto_eject_hosts: true
   server_retry_timeout: 30000
   server_failure_limit: 3
   timeout: 1000
   redis: true
+  redis_auth: ''
+  servers:
+    - 127.0.0.1:6381:1 server1
+    - 127.0.0.1:6382:1 server2
+    - 127.0.0.1:6383:1 server3
