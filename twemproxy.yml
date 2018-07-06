@@ -1,6 +1,4 @@
----
-
-cluster:
+situ:
   listen: 0.0.0.0:6379
   hash: fnv1a_64
   hash_tag: "{}"
@@ -10,7 +8,8 @@ cluster:
   server_failure_limit: 3
   timeout: 1000
   redis: true
-#  redis_auth: ''
+  redis_auth: ''
   servers:
-    - redis-a:6379:1 server1
-    - redis-b:6379:1 server2
+    - 127.0.0.1:6381:1 server1
+    - 127.0.0.1:6382:1 server2
+    - 127.0.0.1:6383:1 server3
